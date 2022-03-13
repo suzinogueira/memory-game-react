@@ -99,8 +99,29 @@ let game = {
             [this.cards[randomIndex], this.cards[currentIndex]] = [this.cards[currentIndex], this.cards[randomIndex]]
         }
        
-    }
+    },
+    flipCard: function(cardId, gameOverCallback, noMatckCallback){
 
+        if(this.setCard(cardId)){
+            if(this.secondCard){
+    
+                if (this.checkMatch()){
+                    this.clearCards();
+                    if(this.checkGameOver()){
+                    //Game Over
+                    gameOverCallback()
+                    }
+                }else{
+                    setTimeout(()=>{
+                    //No Match
+                    this.unflipCards();
+                    noMatckCallback()
+                    },1000);
+                    
+                    }
+            }
+        }
+    }
 }
 
 export default game
